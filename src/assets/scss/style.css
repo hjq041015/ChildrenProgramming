@@ -362,13 +362,14 @@
 }
 
 @media only screen and (min-width: 992px) {
-  .header-area .navbar-nav li.dropdown-list > a::after {
+   .header-area .navbar-nav li.dropdown-list.with-sub > a::after {
     position: relative;
     right: 0;
     top: 2px;
     transition: all 500ms;
     content: "\e924";
     font-size: 18px;
+    line-height: 16px;
     color: #808287;
     display: inline-block;
     font-family: "icomoon" !important;
