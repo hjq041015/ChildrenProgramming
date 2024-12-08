@@ -7,11 +7,15 @@ import BackToTop from "@/components/BackToTop.vue";
 
 <template>
   <div>
-      <top-header/>
-      <index-header/>
+    <top-header/>
+    <index-header/>
+    <div class="smooth-body">
+      <div class="smooth-content">
         <router-view/>
-      <index-footer/>
-      <BackToTop/>
+        <index-footer/>
+      </div>
+    </div>
+    <back-to-top/>
   </div>
 </template>
 

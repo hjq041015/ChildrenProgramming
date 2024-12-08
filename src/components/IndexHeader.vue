@@ -30,7 +30,7 @@ onMounted(useHeaderSticky)
         <!-- Navbar Brand -->
         <div class="mobile-menu">
           <a class="navbar-brand" href="index.html">
-            <img src="@/assets/img/core-img/logo-2.png" alt="Brand">
+            <img src="/img/core-img/logo-2.png" alt="Brand">
           </a>
         </div>
 

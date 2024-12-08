@@ -1,14 +1,13 @@
 <script setup>
-import axios from "axios";
 import {ref} from "vue";
 import {createRandomInt} from "@/utils/data.js";
 import CourseBreadcrumb from "@/components/course/CourseBreadcrumb.vue";
+import request from "@/net";
 
 const data = ref([])
 
-axios.get('http://localhost:8080/system/course/list').then((res) => {
-  data.value = res.data.rows
-})
+request.get('/system/course/list')
+    .then((res) => data.value = res.data.rows)
 </script>
 
 <template>
@@ -21,7 +20,7 @@ axios.get('http://localhost:8080/system/course/list').then((res) => {
             <div class="course-card-4-area course-list d-flex ">
               <div class="course-img-4 single">
                 <div class="cr-img relative">
-                  <img src="@/assets/img/bg-img/inner/list-1.png" alt="">
+                  <img :src="`/img/course/list/list-${course.id}.png`" alt="">
                 </div>
               </div>
               <div class="course-content-info-4 single">
@@ -31,7 +30,7 @@ axios.get('http://localhost:8080/system/course/list').then((res) => {
                     <i class="icon-icon_ribbon_alt"></i>
                   </div>
                 </div>
-                <h2><a href="course-details.html">{{ course.title }}</a></h2>
+                <h2><a :href="`/course/detail/${course.id}`">{{ course.title }}</a></h2>
                 <!-- info -->
                 <div class="course-info-meta-4 d-flex align-items-center">
                   <p><i class="icon-Home"></i> {{ createRandomInt() }} 名学生正在学习</p>
@@ -39,7 +38,7 @@ axios.get('http://localhost:8080/system/course/list').then((res) => {
                 </div>
                 <p class="course-desc-4">{{ course.about }}</p>
                 <div class="auth-info-4 d-flex align-items-center">
-                  <img class="auth-img" src="@/assets/img/bg-img/home-4/c-2.png" alt="">
+                  <img class="auth-img" :src="`/img/course/avatar/c-${course.id}.png`" alt="">
                   <p>主讲老师 <a href="#">{{ course.teacher }}</a></p>
                 </div>
                 <!-- Price & Cart -->

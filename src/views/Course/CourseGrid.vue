@@ -1,13 +1,13 @@
 <script setup>
+import CourseBreadcrumb from "@/components/course/CourseBreadcrumb.vue";
 import {ref} from "vue";
-import axios from "axios";
 import {createRandomInt} from "@/utils/data.js";
+import request from "@/net/index.js";
 
 const data = ref([])
 
-axios.get("http://localhost:8080/system/course/list").then(res => {
-    data.value = res.data.rows
-})
+request.get('/system/course/list')
+    .then((res) => data.value = res.data.rows)
 </script>
 
 <template>
@@ -21,27 +21,27 @@ axios.get("http://localhost:8080/system/course/list").then(res => {
             <div class="course-card-4-area">
               <!-- Shape -->
               <div class="care-shape-4 wow fadeInDown" data-wow-delay="700ms" style="visibility: visible; animation-delay: 700ms; animation-name: fadeInDown;">
-                <img src="@/assets/img/bg-img/home-2/care-shap.png" alt="">
+                <img src="/img/bg-img/home-2/care-shap.png" alt="">
               </div>
-              <div class="course-img-4 bg-img" style="background-image: url(@/assets/img/bg-img/home-4/shape-2.png);">
+              <div class="course-img-4 bg-img" style="background-image: url(/img/bg-img/home-4/shape-2.png);">
                 <div class="course-sub-title">
                   <h6>主讲老师 {{ course.teacher }}</h6>
                 </div>
                 <div class="course-title-img">
-                  <img src="@/assets/img/bg-img/home-4/c-1.png" alt="">
+                  <img :src="`/img/course/teacher/c-${course.id}.png`" alt="">
                 </div>
                 <!-- Shape -->
                 <div class="course-shape-4">
-                  <img src="@/assets/img/bg-img/home-4/shape-3.png" alt="">
+                  <img src="/img/bg-img/home-4/shape-3.png" alt="">
                 </div>
 
                 <div class="course-offer-4">
                   <div class="offer-bg-shape relative">
-                    <img src="@/assets/img/bg-img/home-4/shape-4.png" alt="">
+                    <img src="/img/bg-img/home-4/shape-4.png" alt="">
                   </div>
                   <div class="offer-content-4 ">
-                    <p>-20%</p>
-                    <span>Off</span>
+                    <p>-10%</p>
+                    <span>折扣</span>
                   </div>
 
                 </div>
@@ -62,7 +62,7 @@ axios.get("http://localhost:8080/system/course/list").then(res => {
                 <h2><a href="course-details.html">{{ course.title }}</a></h2>
                 <p class="course-desc-4">{{ course.about }}</p>
                 <div class="auth-info-4 d-flex align-items-center">
-                  <img class="auth-img" src="@/assets/img/bg-img/home-4/c-2.png" alt="">
+                  <img class="auth-img" :src="`/img/course/avatar/c-${course.id}.png`" alt="">
                   <p>主讲老师 <a href="#">{{ course.teacher }}</a></p>
                 </div>
                 <!-- Price & Cart -->
@@ -93,7 +93,6 @@ axios.get("http://localhost:8080/system/course/list").then(res => {
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
