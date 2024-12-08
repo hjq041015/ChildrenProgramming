@@ -25,7 +25,12 @@
               </ul>
             </div>
             <div class="contact-info">
-              <a class="login-btn" href="#"><span class="icon-user-plus-solid-1"></span> 注册</a>
+             <a class="login-btn"  style="margin-left: 10px" href="/login">
+                <span class="icon-user-notes"></span> 登录</a>
+            </div>
+            <div class="contact-info">
+              <a class="login-btn" style="margin-left: 10px" href="/register">
+                <span class="icon-user-plus-solid-1"></span> 注册</a>
             </div>
           </div>
         </div>
