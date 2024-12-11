@@ -1,13 +1,22 @@
 <script setup>
-import CourseBreadcrumb from "@/components/course/CourseBreadcrumb.vue";
+import CourseBreadcrumb from "@/components/Course/CourseBreadCrumb.vue";
 import {ref} from "vue";
 import {createRandomInt} from "@/utils/data.js";
 import request from "@/net/index.js";
-
+import Swal from "sweetalert2";
+import {useAccount} from "@/stores/user.js";
+const account = useAccount()
 const data = ref([])
 
 request.get('/system/course/list')
     .then((res) => data.value = res.data.rows)
+
+function addCourseToCart(id) {
+  request.post(`/system/item/add/${id}`).then(() => {
+    account.cart.count++
+    Swal.fire({ title: "添加商品", text: "课程已经添加到购物车中，请继续选购", icon: "success" })
+  })
+}
 </script>
 
 <template>
@@ -71,11 +80,10 @@ request.get('/system/course/list')
                     <p>￥{{ (course.price * 0.9).toFixed(0) }} <span>￥{{ course.price }}</span></p>
                   </div>
                   <div class="course-buy">
-                    <p><a href="#"><i class="icon-icon_cart_alt"></i> <span>添加到购物车</span></a>
+                    <p><a @click="addCourseToCart(course.id)"><i class="icon-icon_cart_alt"></i> <span>添加到购物车</span></a>
                     </p>
                   </div>
                 </div>
-
               </div>
 
 
