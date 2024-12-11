@@ -109,7 +109,7 @@ public class Course extends BaseEntity
         this.price = price;
     }
 
-    public Long getPrice() 
+    public Long getPrice()
     {
         return price;
     }

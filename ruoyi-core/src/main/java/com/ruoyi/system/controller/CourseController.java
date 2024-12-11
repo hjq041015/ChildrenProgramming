@@ -37,7 +37,6 @@ public class CourseController extends BaseController
     /**
      * 查询课程列表
      */
-    @PreAuthorize("@ss.hasPermi('system:course:list')")
     @GetMapping("/list")
     public TableDataInfo list(Course course)
     {
@@ -62,7 +61,6 @@ public class CourseController extends BaseController
     /**
      * 获取课程详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:course:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Integer id)
     {
