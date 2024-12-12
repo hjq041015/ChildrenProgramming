@@ -2,6 +2,8 @@
 import {computed, onMounted, ref} from "vue";
 import request from "@/net/index.js";
 import Swal from "sweetalert2";
+import HeaderBreadcrumb from "@/components/HeaderBreadcrumb.vue";
+import router from "@/router/index.js";
 
 const cartList = ref([])
 
@@ -52,23 +54,7 @@ function decreaseCount(id) {
 
 <template>
   <div>
-    <div class="breadcrumb-area-2 bg-overlay-3 relative bg-img"
-         style="background-image: url(/img/bg-img/home-3/bg.png);">
-      <div class="container h-100">
-        <div class="row h-100 align-items-center">
-          <div class="col-12">
-            <div class="breadcrumb-conetnt">
-              <ul class="bread-list">
-                <li><a href="/">首页</a></li>
-                <li><i class="icon-down-arrow-11"></i></li>
-                <li>购物车</li>
-              </ul>
-              <h4 class="mb-0">购物车</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+   <header-breadcrumb :path="['购物车']"/>
     <div class="product-cart-area">
       <div class="container">
         <div class="row">
@@ -152,7 +138,7 @@ function decreaseCount(id) {
                 </div>
               </div>
 
-              <button type="submit" class="pro-btn mt-4">
+              <button type="submit" @click="router.push('/order')" class="pro-btn mt-4">
                 <span class="icon-padlock"></span> 开始结账
               </button>
 

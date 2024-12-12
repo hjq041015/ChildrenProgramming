@@ -6,6 +6,14 @@ import request from "@/net/index.js";
 
 const account = useAccount()
 const isLogin = computed(() => !!getToken())
+
+const avatar = computed(() => {
+  if(account.info.avatar) {
+    return `${request.defaults.baseURL}${account.info.avatar}`
+  } else {
+    return '/img/avatar/profile.jpg'
+  }
+})
 </script>
 
 <template>
@@ -30,17 +38,16 @@ const isLogin = computed(() => !!getToken())
                 <li><a href="#"><span class="icon-instagram"></span></a></li>
               </ul>
             </div>
-               <div class="contact-info" v-if="isLogin"
+            <div class="contact-info" v-if="isLogin"
                  style="display: flex;align-items: center;margin-left: 20px">
               <div style="color: white;text-align: right;font-size: 13px;line-height: 15px">
-                <div>{{ account.info.userName }}</div>
-                <div>{{ account.info.email }}</div>
+                <div>{{ account.info.nickName }}</div>
+                <div style="color: gray">{{ account.info.email ?? '暂无电子邮件地址' }}</div>
               </div>
-              <img :src="`${request.defaults.baseURL}${account.info.avatar}`"
-                   class="user-avatar">
+              <img :src="avatar" class="user-avatar">
             </div>
             <div class="contact-info" v-if="!isLogin">
-             <a class="login-btn"  style="margin-left: 10px" href="/login">
+              <a class="login-btn"  style="margin-left: 10px" href="/login">
                 <span class="icon-user-notes"></span> 登录</a>
             </div>
             <div class="contact-info" v-if="!isLogin">
