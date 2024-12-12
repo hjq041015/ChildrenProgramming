@@ -47,6 +47,11 @@ public class OrderServiceImpl implements IOrderService
         return orderMapper.selectOrderList(order);
     }
 
+    @Override
+    public List<Order> selectOrderListByUserId(Long userId) {
+        return orderMapper.selectOrderListByUserId(userId);
+    }
+
     /**
      * 新增订单列表
      * 

@@ -56,6 +56,13 @@ public class OrderController extends BaseController
         return getDataTable(list);
     }
 
+    @GetMapping("/my-list")
+    public TableDataInfo myList() {
+        startPage();
+        List<Order> list = orderService.selectOrderListByUserId(SecurityUtils.getUserId());
+        return getDataTable(list);
+    }
+
     /**
      * 导出订单列表列表
      */

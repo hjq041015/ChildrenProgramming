@@ -28,6 +28,7 @@ public interface OrderMapper
      */
     public List<Order> selectOrderList(Order order);
 
+    List<Order> selectOrderListByUserId(Long userId);
     /**
      * 新增订单列表
      * 
