@@ -28,20 +28,24 @@ const router = createRouter({
     }, {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/auth/Login.vue'),
+      component: () => import('@/views/auth/Login.vue')
     }, {
       path: '/register',
       name: 'register',
-      component: () => import('@/views/auth/Register.vue'),
+      component: () => import('@/views/auth/Register.vue')
     },{
       path: '/cart',
       name: 'cart',
-      component: () => import('@/views/Cart.vue'),
+      component: () => import('@/views/Cart.vue')
     },{
       path: '/order',
       name: 'order',
-      component: () => import('@/views/Order.vue'),
-    }
+      component: () => import('@/views/Order.vue')
+    },{
+      path: '/order-list',
+      name: 'orderList',
+      component: () => import('@/views/OrderList.vue')
+  }
   ],
 })
 

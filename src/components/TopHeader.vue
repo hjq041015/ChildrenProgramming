@@ -1,11 +1,22 @@
 <script setup>
 import {useAccount} from "@/stores/user.js";
-import {computed} from "vue";
-import {getToken} from "@/utils/token.js";
+import {computed, ref} from "vue";
+import {clearToken, getToken} from "@/utils/token.js";
 import request from "@/net/index.js";
+import router from "@/router/index.js";
 
 const account = useAccount()
-const isLogin = computed(() => !!getToken())
+const isLogin = ref(!!getToken())
+
+function logout() {
+    request.post('/logout').then(({data}) => {
+        if (data.code === 200) {
+            router.push("/")
+            clearToken()
+            isLogin.value = !!getToken()
+        }
+    })
+}
 
 const avatar = computed(() => {
   if(account.info.avatar) {
@@ -44,7 +55,15 @@ const avatar = computed(() => {
                 <div>{{ account.info.nickName }}</div>
                 <div style="color: gray">{{ account.info.email ?? '暂无电子邮件地址' }}</div>
               </div>
-              <img :src="avatar" class="user-avatar">
+              <div class="user">
+                <img :src="avatar" class="user-avatar">
+                <div class="dropdown-box">
+                  <div @click="router.push('/order-list')">
+                    <i class="icon-database" style="margin-right: 10px"></i> 我的订单</div>
+                  <div @click="logout">
+                    <i class="icon-right-arrow-1" style="margin-right: 10px"></i> 退出登录</div>
+                </div>
+              </div>
             </div>
             <div class="contact-info" v-if="!isLogin">
               <a class="login-btn"  style="margin-left: 10px" href="/login">
@@ -62,10 +81,44 @@ const avatar = computed(() => {
 </template>
 
 <style scoped>
-.user-avatar {
-  height: 35px;
-  width: 35px;
-  margin-left: 10px;
-  border-radius: 50%;
+.user {
+  position: relative;
+
+  .user-avatar {
+    height: 35px;
+    width: 35px;
+    margin-left: 10px;
+    border-radius: 50%;
+  }
+
+  .dropdown-box {
+    top: 40px;
+    width: 210px;
+    right: 0;
+    transition: all 300ms ease-in-out;
+    font-size: 15px;
+    line-height: 29px;
+    padding: 16px 24px;
+    position: absolute;
+    border-radius: 8px;
+    opacity: 0;
+    visibility: hidden;
+    background-color: white;
+    border: 1px solid #dee1e6;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+    div:hover {
+      color: #F8941F;
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    .dropdown-box {
+      top: 35px;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
 </style>
