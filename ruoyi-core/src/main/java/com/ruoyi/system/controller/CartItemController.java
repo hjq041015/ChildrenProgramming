@@ -135,7 +135,7 @@ public class CartItemController extends BaseController
 
     @GetMapping("/count")
     public AjaxResult countItem() {
-        return AjaxResult.success(cartItemService.selectCartItemListById(SecurityUtils.getUserId()));
+        return AjaxResult.success(cartItemService.selectCartItemCount(SecurityUtils.getUserId()));
     }
 
     @GetMapping("/my-list")

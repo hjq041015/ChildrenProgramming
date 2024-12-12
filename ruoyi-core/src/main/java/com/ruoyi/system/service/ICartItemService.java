@@ -73,7 +73,7 @@ public interface ICartItemService
      * @param userId 用户Id
      * @return 购物车数量
      */
-     Long selectCartItemListById(Long userId);
+     long selectCartItemCount(Long userId);
 
 
      List<CartItem> selectCartItemListByUserId(Long userId);

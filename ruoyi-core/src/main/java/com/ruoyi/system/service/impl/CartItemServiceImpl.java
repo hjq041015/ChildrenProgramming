@@ -99,7 +99,7 @@ public class CartItemServiceImpl implements ICartItemService
     }
 
     @Override
-    public Long selectCartItemListById(Long userId) {
+    public long selectCartItemCount(Long userId) {
         List<CartItem> items = cartItemMapper.selectCartItemListById(userId);
         Optional<Long> reduce = items.stream().map((CartItem::getCount)).reduce(Long::sum);
         return reduce.orElse(0L);
