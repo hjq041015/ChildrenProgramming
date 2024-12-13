@@ -1,5 +1,26 @@
 <script setup>
-
+const vips = [
+  {
+    id: 1,
+    name: '普通会员',
+    price: '35',
+    limit: 1,
+    disable: ['vip1', 'vip2', "vip3"],
+    colorClass: [],
+    desc: ['少儿编程基础课程免费学习', '线下老师一对一指导', '免费使用少儿编程开发器件', '全天候在线咨询服务', '更多在线直播课程']
+  }, {
+    id: 2,
+    name: '黄金会员',
+    price: '100',
+    limit: 1,
+    disable: ['vip2', "vip3"],
+    colorClass: ['two'],
+    desc: [
+      '少儿编程全套课程免费学习', '线下老师一对一指导', '免费使用少儿编程开发器件', '全天候在线咨询服务', '更多在线直播课程',
+      '每周一次家庭教育服务', '周一到周五放学托管服务'
+    ]
+  }
+]
 </script>
 
 <template>
@@ -138,61 +159,36 @@
         <div class="row">
           <div class="col-lg-4">
             <div class="section-title-area cate-heading">
-              <h6 class="wow fadeInDown" data-wow-delay="500ms" style="visibility: visible; animation-delay: 500ms; animation-name: fadeInDown;">Popular categories</h6>
-              <h2 class="wow fadeInDown" data-wow-delay="700ms" style="visibility: visible; animation-delay: 700ms; animation-name: fadeInDown;">Start your journey today with Mark
-                as your tutor.</h2>
-              <p class="mb-5 wow fadeInDown" data-wow-delay="900ms" style="visibility: visible; animation-delay: 900ms; animation-name: fadeInDown;">All membership plans come with a
-                30-day satisfaction guarantee.</p>
-
-              <a class="btn-1 wow fadeInDown" data-wow-delay="1100ms" href="pricing.html" style="visibility: visible; animation-delay: 1100ms; animation-name: fadeInDown;">Learn More <span class="icon-right-arrow-11"></span></a>
+              <h6 class="wow fadeInDown" data-wow-delay="500ms" style="visibility: visible; animation-delay: 500ms; animation-name: fadeInDown;">欢迎加入我们</h6>
+              <h2 class="wow fadeInDown" data-wow-delay="700ms" style="visibility: visible; animation-delay: 700ms; animation-name: fadeInDown;">加入少儿编程俱乐部，让自己的孩子赢在起跑线</h2>
+              <p class="mb-5 wow fadeInDown" data-wow-delay="900ms" style="visibility: visible; animation-delay: 900ms; animation-name: fadeInDown;">
+                现在加入会员，还送价值288的入会大礼包，双十一特惠活动
+              </p>
+              <a class="btn-1 wow fadeInDown" data-wow-delay="1100ms" href="#" style="visibility: visible; animation-delay: 1100ms; animation-name: fadeInDown;">了解更多 <span class="icon-right-arrow-11"></span></a>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-4">
-            <div class="cate-price-card wow fadeInUp" data-wow-delay="700ms" style="visibility: visible; animation-delay: 700ms; animation-name: fadeInUp;">
+          <div class="col-md-6 col-lg-4" v-for="vip in vips">
+            <div class="cate-price-card wow fadeInUp" :class="vip.colorClass"
+                 data-wow-delay="700ms" style="visibility: visible; animation-delay: 700ms; animation-name: fadeInUp;">
               <div class="cate-price-body">
-                <h2>Mastery <span class="cate-price-title">$35 /</span> <span class="month-desc">m</span>
+                <h2>
+                  {{ vip.name }} <br>
+                  <span class="cate-price-title">￥{{ vip.price }} /</span>
+                  <span class="month-desc">月</span>
                 </h2>
-                <h6>1 device/ One user</h6>
-
+                <h6>{{ vip.limit }} 个小朋友可用</h6>
                 <ul>
-                  <li>Access to Core Curriculum</li>
-                  <li>Weekly Homework Assignments</li>
-                  <li>One-on-One Monthly Consultation</li>
-                  <li>24/7 Email Support</li>
-                  <li>Download for offline viewing</li>
+                  <li v-for="item in vip.desc">{{ item }}</li>
                 </ul>
 
                 <div class="price-btn-area">
-                  <a class="price-btn" href="login.html">Get Started <span class="icon-right-arrow-11"></span></a>
+                  <a class="price-btn" href="/course/vip">
+                    立即购买 <span class="icon-right-arrow-11"></span></a>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="col-md-6 col-lg-4">
-            <div class="cate-price-card two wow fadeInUp" data-wow-delay="900ms" style="visibility: visible; animation-delay: 900ms; animation-name: fadeInUp;">
-              <div class="cate-price-body">
-                <h2>Mastery <span class="cate-price-title">$35 /</span> <span class="month-desc">m</span>
-                </h2>
-                <h6>1 device/ One user</h6>
-
-                <ul>
-                  <li>Access to Core Curriculum</li>
-                  <li>Weekly Homework Assignments</li>
-                  <li>One-on-One Monthly Consultation</li>
-                  <li>24/7 Email Support</li>
-                  <li>Download for offline viewing</li>
-                </ul>
-
-                <div class="price-btn-area">
-                  <a class="price-btn" href="login.html">Get Started <span class="icon-right-arrow-11"></span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
         </div>
       </div>
     </div>

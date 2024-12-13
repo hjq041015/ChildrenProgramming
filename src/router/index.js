@@ -57,6 +57,28 @@ const router = createRouter({
       path: '/account',
       name: 'account',
       component: () => import('@/views/Account.vue')
+    },{
+      path: '/about',
+      name: 'about',
+      children: [
+        {
+          path: '',
+          name: 'about-us',
+          component: () => import('@/views/about/AboutUs.vue')
+        }, {
+          path: 'gallery',
+          name: 'about-gallery',
+          component: () => import('@/views/about/Gallery.vue')
+        }, {
+          path: 'teachers',
+          name: 'about-teachers',
+          component: () => import('@/views/about/Teachers.vue')
+        }, {
+          path: 'contact',
+          name: 'about-contact',
+          component: () => import('@/views/about/Contact.vue')
+        }
+      ]
     }
   ],
 })

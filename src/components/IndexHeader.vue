@@ -11,10 +11,10 @@ const routes = [
     ]
   },
   { name: '关于我们', children: [
-      { name: '公司介绍', route: '' },
-      { name: '画廊', route: '' },
-      { name: '师资团队', route: '' },
-      { name: '联系我们', route: '' }
+      { name: '公司介绍', route: '/about' },
+      { name: '画廊', route: '/about/gallery' },
+      { name: '师资团队', route: '/about/teachers' },
+      { name: '联系我们', route: '/about/contact' }
     ]
   },
   { name: '最新活动', route: "/event" },
