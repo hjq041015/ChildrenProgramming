@@ -23,6 +23,14 @@ const router = createRouter({
           path: 'detail/:id',
           name: 'course-detail',
           component: () => import('@/views/course/CourseDetail.vue')
+        },{
+          path: 'vip',
+          name: 'vip',
+          component: () => import('@/views/Course/Vip.vue')
+        },{
+          path: 'vip/order',
+          name: 'vipOrder',
+          component: () => import('@/views/Course/VipOrder.vue')
         }
       ]
     }, {

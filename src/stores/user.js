@@ -7,6 +7,7 @@ export const useAccount = defineStore('account',() => {
         userName: '',
         nickName: '',
         email: '',
+        roles: []
     })
 
 

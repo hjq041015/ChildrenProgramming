@@ -14,6 +14,7 @@ function logout() {
             router.push("/")
             clearToken()
             isLogin.value = !!getToken()
+            account.info = {}
         }
     })
 }

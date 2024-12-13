@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted} from "vue";
+import {computed, onMounted} from "vue";
 import {useHeaderSticky} from "@/utils/common.js";
 import {useAccount} from "@/stores/user.js";
 
@@ -7,7 +7,7 @@ const routes = [
   { name: '首页', route: "/" },
   { name: '课程列表', children: [
       { name: '购买课程', route: '/course/list' },
-      { name: '充值会员', route: '' }
+      { name: '充值会员', route: '/course/vip' }
     ]
   },
   { name: '关于我们', children: [
@@ -21,7 +21,14 @@ const routes = [
   { name: '编程博客', route: "/blog" }
 ]
 
+
 const account = useAccount()
+
+const role = computed(() => {
+  const r = account.info.roles
+  if(!r?.length) return null
+  else return account.info.roles[0]
+})
 
 onMounted(useHeaderSticky)
 </script>
@@ -76,9 +83,28 @@ onMounted(useHeaderSticky)
         </div>
       </div>
     </nav>
+       <div class="vip-banner" :class="role.roleKey" v-if="role">
+      🏆 欢迎您{{ account.info.nickName }}，尊贵的{{ role.roleName }}用户，今天是{{ new Date().toLocaleDateString() }}
+    </div>
   </header>
 </template>
 
-<style scoped>
+<style less scoped>
+.vip-banner {
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
 
+  &.vip1 {
+    background-color: #0095f1;
+  }
+
+  &.vip2 {
+    background-color: #f1cb00;
+  }
+
+  &.vip3 {
+    background: linear-gradient(to right, #f1ad00, #7d00f1);
+  }
+}
 </style>
