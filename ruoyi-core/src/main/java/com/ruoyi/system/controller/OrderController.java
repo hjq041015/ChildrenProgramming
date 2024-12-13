@@ -7,19 +7,14 @@ import java.util.List;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.domain.CartItem;
 import com.ruoyi.system.domain.OrderItem;
+import com.ruoyi.system.domain.VipItem;
 import com.ruoyi.system.service.ICartItemService;
+import com.ruoyi.system.service.IVipItemService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -44,6 +39,9 @@ public class OrderController extends BaseController
 
     @Autowired
     private ICartItemService cartItemService;
+
+    @Autowired
+    private IVipItemService vipItemService;
     /**
      * 查询订单列表列表
      */
@@ -140,5 +138,19 @@ public class OrderController extends BaseController
                     items.stream().map(CartItem::getId).toArray(Long[]::new));
         }
         return toAjax(rows);
+    }
+
+    @PostMapping("/create-vip")
+    public AjaxResult createVip(@RequestBody Order order,
+                                @RequestParam Long id) {
+        VipItem vipItem = vipItemService.selectVipItemById(id);
+        OrderItem orderItem = new OrderItem();
+        BeanUtils.copyProperties(vipItem,orderItem, "id");
+        orderItem.setCount(1L);
+        order.setTime(new Date());
+        order.setPrice(vipItem.getPrice());
+        order.setUid(SecurityUtils.getUserId());
+        order.setOrderItemList(List.of(orderItem));
+        return toAjax(orderService.insertOrder(order));
     }
 }
