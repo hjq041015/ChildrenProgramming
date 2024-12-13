@@ -19,13 +19,7 @@ function logout() {
     })
 }
 
-const avatar = computed(() => {
-  if(account.info.avatar) {
-    return `${request.defaults.baseURL}${account.info.avatar}`
-  } else {
-    return '/img/avatar/profile.jpg'
-  }
-})
+
 </script>
 
 <template>
@@ -57,10 +51,12 @@ const avatar = computed(() => {
                 <div style="color: gray">{{ account.info.email ?? '暂无电子邮件地址' }}</div>
               </div>
               <div class="user">
-                <img :src="avatar" class="user-avatar">
+                <img :src="account.avatar" class="user-avatar">
                 <div class="dropdown-box">
                   <div @click="router.push('/order-list')">
                     <i class="icon-database" style="margin-right: 10px"></i> 我的订单</div>
+                    <div @click="router.push('/account')">
+                    <i class="icon-flag-usa" style="margin-right: 10px"></i> 个人信息</div>
                   <div @click="logout">
                     <i class="icon-right-arrow-1" style="margin-right: 10px"></i> 退出登录</div>
                 </div>
@@ -74,6 +70,7 @@ const avatar = computed(() => {
               <a class="login-btn" style="margin-left: 10px" href="/register">
                 <span class="icon-user-plus-solid-1"></span> 注册</a>
             </div>
+
           </div>
         </div>
       </div>

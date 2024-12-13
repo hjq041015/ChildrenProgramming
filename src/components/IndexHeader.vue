@@ -83,7 +83,7 @@ onMounted(useHeaderSticky)
         </div>
       </div>
     </nav>
-       <div class="vip-banner" :class="role.roleKey" v-if="role">
+       <div class="vip-banner" :class="role.roleKey" v-if="role && role.roleKey.startsWith('vip')">
       🏆 欢迎您{{ account.info.nickName }}，尊贵的{{ role.roleName }}用户，今天是{{ new Date().toLocaleDateString() }}
     </div>
   </header>
