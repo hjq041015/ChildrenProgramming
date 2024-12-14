@@ -3,6 +3,8 @@
 import HeaderBreadcrumb from "@/components/HeaderBreadcrumb.vue";
 import {useAccount} from "@/stores/user.js";
 import {computed} from "vue";
+import {getToken} from "@/utils/token.js";
+import router from "@/router/index.js";
 const account = useAccount()
 const vips = [
   {
@@ -43,6 +45,10 @@ const role = computed(() => {
   if(!r?.length) return null
   else return account.info.roles[0]
 })
+
+if(!getToken()) {
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -68,7 +74,7 @@ const role = computed(() => {
                   <li v-for="item in vip.desc">{{ item }}</li>
                 </ul>
 
-                <div class="price-btn-area" v-if="!vip.disable.includes(role.roleKey)">
+                <div class="price-btn-area" v-if="!vip.disable.includes(role?.roleKey)">
                   <a class="price-btn" :href="`/course/vip/order?id=${vip.id}`">
                     立即购买 <span class="icon-right-arrow-11"></span></a>
                 </div>

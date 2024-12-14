@@ -5,6 +5,8 @@ import CourseBreadcrumb from "@/components/Course/CourseBreadCrumb.vue";
 import request from "@/net/index.js";
 import Swal from "sweetalert2";
 import {useAccount} from "@/stores/user.js";
+import {getToken} from "@/utils/token.js";
+import router from "@/router/index.js";
 
 const account = useAccount()
 const data = ref([])
@@ -13,6 +15,10 @@ request.get('/system/course/list')
     .then((res) => data.value = res.data.rows)
 
 function addCourseToCart(id) {
+    if (!getToken()) {
+    router.push('/login')
+    return
+  }
   request.post(`/system/item/add/${id}`).then(() => {
     account.cart.count++
     Swal.fire({ title: "添加商品", text: "课程已经添加到购物车中，请继续选购", icon: "success" })

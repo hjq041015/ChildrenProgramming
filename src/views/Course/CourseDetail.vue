@@ -4,10 +4,13 @@ import request from "@/net/index.js";
 import router from "@/router/index.js";
 import {ref} from "vue";
 import {createRandomInt, formatTime} from "@/utils/data.js";
+import {getToken} from "@/utils/token.js";
+import Swal from "sweetalert2";
+import {useAccount} from "@/stores/user.js";
 
 const route = useRoute()
 const id = route.params.id
-
+const account = useAccount()
 const data = ref({})
 
 if(!id) {
@@ -17,6 +20,19 @@ if(!id) {
 request.get(`/system/course/${route.params.id}`).then((res) => {
   data.value = res.data.data
 })
+
+function addCourseToCart() {
+  if (!getToken()) {
+    router.push('/login')
+    return
+  }
+  request.post(`/system/item/add/${id}`).then(() => {
+    account.cart.count++
+    Swal.fire({ title: "添加商品", text: "课程已经添加到购物车中，请继续选购", icon: "success" }).then(() => {
+      router.push('/cart')
+    })
+  })
+}
 </script>
 
 <template>
@@ -129,7 +145,7 @@ request.get(`/system/course/${route.params.id}`).then((res) => {
                 </div>
                 <div class="enroll-course-content">
                   <div class="enroll-heading text-center">
-                    <a class="auth-btn w-100" href="login.html">购买此课程</a>
+                    <a class="auth-btn w-100" @click="addCourseToCart">购买此课程</a>
                     <p>30天无理由退款</p>
                   </div>
 

@@ -2,6 +2,7 @@
 import HeaderBreadcrumb from "@/components/HeaderBreadcrumb.vue";
 import {reactive} from "vue";
 import request from "@/net/index.js";
+import Swal from "sweetalert2";
 
 const advice = reactive({
   name: '',
@@ -12,7 +13,11 @@ const advice = reactive({
 
 function createUserAdvice() {
   request.post('/system/advice/create', advice).then(({ data }) => {
-    console.info(data)
+    if(data.code !== 200) {
+      Swal.fire({ title: "提交意见", text: `提交失败: ${data.msg}`, icon: "error" })
+    } else {
+      Swal.fire({ title: "提交意见", text: "您的意见已经成功提交", icon: "success" })
+    }
   })
 }
 </script>
@@ -98,7 +103,7 @@ function createUserAdvice() {
           </div>
         </div>
       </div>
-      <iframe src=""></iframe>
+      <iframe src="https://map.baidu.com/@13518044.136998607,3645772.9594125515,17.58z"></iframe>
     </div>
   </div>
 </template>

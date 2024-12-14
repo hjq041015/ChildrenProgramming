@@ -79,6 +79,25 @@ const router = createRouter({
           component: () => import('@/views/about/Contact.vue')
         }
       ]
+    }, {
+      path: '/event',
+      name: 'event',
+      component: () => import('@/views/Event.vue'),
+    },
+    {
+      path: '/blog',
+      name: 'blog',
+      children: [
+        {
+          path: '',
+          name: 'blog-list',
+          component: () => import('@/views/blog/BlogList.vue')
+        }, {
+          path: 'detail/:id',
+          name: 'blog-detail',
+          component: () => import('@/views/blog/BlogDetail.vue')
+        }
+      ]
     }
   ],
 })
