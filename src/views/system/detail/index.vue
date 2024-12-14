@@ -1,18 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="老师ID" prop="teacherId">
+      <el-form-item label="推荐教师ID" prop="teacherId">
         <el-input
           v-model="queryParams.teacherId"
-          placeholder="请输入老师ID"
-          clearable
-          @keyup.enter="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="老师推荐的理由" prop="teacherComment">
-        <el-input
-          v-model="queryParams.teacherComment"
-          placeholder="请输入老师推荐的理由"
+          placeholder="请输入推荐教师ID"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -67,10 +59,16 @@
 
     <el-table v-loading="loading" :data="detailList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="博客ID" align="center" prop="id" />
-      <el-table-column label="博客内容" align="center" prop="content" />
-      <el-table-column label="老师ID" align="center" prop="teacherId" />
-      <el-table-column label="老师推荐的理由" align="center" prop="teacherComment" />
+      <el-table-column label="文章ID" align="center" prop="id" />
+      <el-table-column label="文章内容" align="center" prop="content">
+        <template #default="{ row }">
+          <div class="line-limit-3">
+            {{ row.content }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="推荐教师ID" align="center" prop="teacherId" />
+      <el-table-column label="推荐理由" align="center" prop="teacherComment" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:detail:edit']">修改</el-button>
@@ -87,17 +85,17 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改博客详情表对话框 -->
+    <!-- 添加或修改博客文章详情对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="detailRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="博客内容">
+        <el-form-item label="文章内容">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
-        <el-form-item label="老师ID" prop="teacherId">
-          <el-input v-model="form.teacherId" placeholder="请输入老师ID" />
+        <el-form-item label="推荐教师ID" prop="teacherId">
+          <el-input v-model="form.teacherId" placeholder="请输入推荐教师ID" />
         </el-form-item>
-        <el-form-item label="老师推荐的理由" prop="teacherComment">
-          <el-input v-model="form.teacherComment" placeholder="请输入老师推荐的理由" />
+        <el-form-item label="推荐理由" prop="teacherComment">
+          <el-input v-model="form.teacherComment" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -140,7 +138,7 @@ const data = reactive({
 
 const { queryParams, form, rules } = toRefs(data);
 
-/** 查询博客详情表列表 */
+/** 查询博客文章详情列表 */
 function getList() {
   loading.value = true;
   listDetail(queryParams.value).then(response => {
@@ -190,7 +188,7 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   reset();
   open.value = true;
-  title.value = "添加博客详情表";
+  title.value = "添加博客文章详情";
 }
 
 /** 修改按钮操作 */
@@ -200,7 +198,7 @@ function handleUpdate(row) {
   getDetail(_id).then(response => {
     form.value = response.data;
     open.value = true;
-    title.value = "修改博客详情表";
+    title.value = "修改博客文章详情";
   });
 }
 
@@ -228,7 +226,7 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const _ids = row.id || ids.value;
-  proxy.$modal.confirm('是否确认删除博客详情表编号为"' + _ids + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除博客文章详情编号为"' + _ids + '"的数据项？').then(function() {
     return delDetail(_ids);
   }).then(() => {
     getList();

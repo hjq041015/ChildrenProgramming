@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询建议表列表
+// 查询用户意见列表
 export function listAdvice(query) {
   return request({
     url: '/system/advice/list',
@@ -9,7 +9,7 @@ export function listAdvice(query) {
   })
 }
 
-// 查询建议表详细
+// 查询用户意见详细
 export function getAdvice(id) {
   return request({
     url: '/system/advice/' + id,
@@ -17,7 +17,7 @@ export function getAdvice(id) {
   })
 }
 
-// 新增建议表
+// 新增用户意见
 export function addAdvice(data) {
   return request({
     url: '/system/advice',
@@ -26,7 +26,7 @@ export function addAdvice(data) {
   })
 }
 
-// 修改建议表
+// 修改用户意见
 export function updateAdvice(data) {
   return request({
     url: '/system/advice',
@@ -35,7 +35,7 @@ export function updateAdvice(data) {
   })
 }
 
-// 删除建议表
+// 删除用户意见
 export function delAdvice(id) {
   return request({
     url: '/system/advice/' + id,

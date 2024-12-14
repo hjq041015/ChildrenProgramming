@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询购物车列表
+// 查询购物车商品列表
 export function listItem(query) {
   return request({
     url: '/system/item/list',
@@ -9,7 +9,7 @@ export function listItem(query) {
   })
 }
 
-// 查询购物车详细
+// 查询购物车商品详细
 export function getItem(id) {
   return request({
     url: '/system/item/' + id,
@@ -17,7 +17,7 @@ export function getItem(id) {
   })
 }
 
-// 新增购物车
+// 新增购物车商品
 export function addItem(data) {
   return request({
     url: '/system/item',
@@ -26,7 +26,7 @@ export function addItem(data) {
   })
 }
 
-// 修改购物车
+// 修改购物车商品
 export function updateItem(data) {
   return request({
     url: '/system/item',
@@ -35,7 +35,7 @@ export function updateItem(data) {
   })
 }
 
-// 删除购物车
+// 删除购物车商品
 export function delItem(id) {
   return request({
     url: '/system/item/' + id,

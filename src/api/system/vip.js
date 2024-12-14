@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询vip列表
+// 查询会员等级列表
 export function listVip(query) {
   return request({
     url: '/system/vip/list',
@@ -9,7 +9,7 @@ export function listVip(query) {
   })
 }
 
-// 查询vip详细
+// 查询会员等级详细
 export function getVip(id) {
   return request({
     url: '/system/vip/' + id,
@@ -17,7 +17,7 @@ export function getVip(id) {
   })
 }
 
-// 新增vip
+// 新增会员等级
 export function addVip(data) {
   return request({
     url: '/system/vip',
@@ -26,7 +26,7 @@ export function addVip(data) {
   })
 }
 
-// 修改vip
+// 修改会员等级
 export function updateVip(data) {
   return request({
     url: '/system/vip',
@@ -35,7 +35,7 @@ export function updateVip(data) {
   })
 }
 
-// 删除vip
+// 删除会员等级
 export function delVip(id) {
   return request({
     url: '/system/vip/' + id,

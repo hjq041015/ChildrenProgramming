@@ -1,28 +1,28 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="博客标题" prop="title">
+      <el-form-item label="文章标题" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入博客标题"
+          placeholder="请输入文章标题"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="作者" prop="author">
+      <el-form-item label="发表人" prop="author">
         <el-input
           v-model="queryParams.author"
-          placeholder="请输入作者"
+          placeholder="请输入发表人"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="时间" prop="time">
+      <el-form-item label="发布时间" prop="time">
         <el-date-picker clearable
           v-model="queryParams.time"
           type="date"
           value-format="YYYY-MM-DD"
-          placeholder="请选择时间">
+          placeholder="请选择发布时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -75,11 +75,11 @@
 
     <el-table v-loading="loading" :data="blogList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="博客ID" align="center" prop="id" />
-      <el-table-column label="博客标题" align="center" prop="title" />
-      <el-table-column label="博客内容" align="center" prop="description" />
-      <el-table-column label="作者" align="center" prop="author" />
-      <el-table-column label="时间" align="center" prop="time" width="180">
+      <el-table-column label="文章ID" align="center" prop="id" />
+      <el-table-column label="文章标题" align="center" prop="title" />
+      <el-table-column label="文章简介" align="center" prop="description" />
+      <el-table-column label="发表人" align="center" prop="author" />
+      <el-table-column label="发布时间" align="center" prop="time" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.time, '{y}-{m}-{d}') }}</span>
         </template>
@@ -100,27 +100,27 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改博客文章对话框 -->
+    <!-- 添加或修改博客文章管理对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="blogRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="博客标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入博客标题" />
+        <el-form-item label="文章标题" prop="title">
+          <el-input v-model="form.title" placeholder="请输入文章标题" />
         </el-form-item>
-        <el-form-item label="博客内容" prop="description">
+        <el-form-item label="文章简介" prop="description">
           <el-input v-model="form.description" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="作者" prop="author">
-          <el-input v-model="form.author" placeholder="请输入作者" />
+        <el-form-item label="发表人" prop="author">
+          <el-input v-model="form.author" placeholder="请输入发表人" />
         </el-form-item>
-        <el-form-item label="时间" prop="time">
+        <el-form-item label="发布时间" prop="time">
           <el-date-picker clearable
             v-model="form.time"
             type="date"
             value-format="YYYY-MM-DD"
-            placeholder="请选择时间">
+            placeholder="请选择发布时间">
           </el-date-picker>
         </el-form-item>
-        <el-divider content-position="center">博客详情表信息</el-divider>
+        <el-divider content-position="center">博客文章详情信息</el-divider>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
             <el-button type="primary" icon="Plus" @click="handleAddBlogDetail">添加</el-button>
@@ -132,14 +132,9 @@
         <el-table :data="blogDetailList" :row-class-name="rowBlogDetailIndex" @selection-change="handleBlogDetailSelectionChange" ref="blogDetail">
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column label="序号" align="center" prop="index" width="50"/>
-          <el-table-column label="老师ID" prop="teacherId" width="150">
+          <el-table-column label="推荐教师ID" prop="teacherId" width="150">
             <template #default="scope">
-              <el-input v-model="scope.row.teacherId" placeholder="请输入老师ID" />
-            </template>
-          </el-table-column>
-          <el-table-column label="老师推荐的理由" prop="teacherComment" width="150">
-            <template #default="scope">
-              <el-input v-model="scope.row.teacherComment" placeholder="请输入老师推荐的理由" />
+              <el-input v-model="scope.row.teacherId" placeholder="请输入推荐教师ID" />
             </template>
           </el-table-column>
         </el-table>
@@ -187,7 +182,7 @@ const data = reactive({
 
 const { queryParams, form, rules } = toRefs(data);
 
-/** 查询博客文章列表 */
+/** 查询博客文章管理列表 */
 function getList() {
   loading.value = true;
   listBlog(queryParams.value).then(response => {
@@ -239,7 +234,7 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   reset();
   open.value = true;
-  title.value = "添加博客文章";
+  title.value = "添加博客文章管理";
 }
 
 /** 修改按钮操作 */
@@ -250,7 +245,7 @@ function handleUpdate(row) {
     form.value = response.data;
     blogDetailList.value = response.data.blogDetailList;
     open.value = true;
-    title.value = "修改博客文章";
+    title.value = "修改博客文章管理";
   });
 }
 
@@ -279,7 +274,7 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const _ids = row.id || ids.value;
-  proxy.$modal.confirm('是否确认删除博客文章编号为"' + _ids + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除博客文章管理编号为"' + _ids + '"的数据项？').then(function() {
     return delBlog(_ids);
   }).then(() => {
     getList();
@@ -287,12 +282,12 @@ function handleDelete(row) {
   }).catch(() => {});
 }
 
-/** 博客详情表序号 */
+/** 博客文章详情序号 */
 function rowBlogDetailIndex({ row, rowIndex }) {
   row.index = rowIndex + 1;
 }
 
-/** 博客详情表添加按钮操作 */
+/** 博客文章详情添加按钮操作 */
 function handleAddBlogDetail() {
   let obj = {};
   obj.content = "";
@@ -301,10 +296,10 @@ function handleAddBlogDetail() {
   blogDetailList.value.push(obj);
 }
 
-/** 博客详情表删除按钮操作 */
+/** 博客文章详情删除按钮操作 */
 function handleDeleteBlogDetail() {
   if (checkedBlogDetail.value.length == 0) {
-    proxy.$modal.msgError("请先选择要删除的博客详情表数据");
+    proxy.$modal.msgError("请先选择要删除的博客文章详情数据");
   } else {
     const blogDetails = blogDetailList.value;
     const checkedBlogDetails = checkedBlogDetail.value;

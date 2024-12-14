@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="VIp类型" prop="titile">
+      <el-form-item label="会员等级名称" prop="title">
         <el-input
-          v-model="queryParams.titile"
-          placeholder="请输入VIp类型"
+          v-model="queryParams.title"
+          placeholder="请输入会员等级名称"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="价格" prop="price">
+      <el-form-item label="会员价格" prop="price">
         <el-input
           v-model="queryParams.price"
-          placeholder="请输入价格"
+          placeholder="请输入会员价格"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -67,9 +67,9 @@
 
     <el-table v-loading="loading" :data="vipList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="VIP订单ID" align="center" prop="id" />
-      <el-table-column label="VIp类型" align="center" prop="titile" />
-      <el-table-column label="价格" align="center" prop="price" />
+      <el-table-column label="会员商品ID" align="center" prop="id" />
+      <el-table-column label="会员等级名称" align="center" prop="title" />
+      <el-table-column label="会员价格" align="center" prop="price" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:vip:edit']">修改</el-button>
@@ -86,14 +86,14 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改vip对话框 -->
+    <!-- 添加或修改会员等级对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="vipRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="VIp类型" prop="titile">
-          <el-input v-model="form.titile" placeholder="请输入VIp类型" />
+        <el-form-item label="会员等级名称" prop="title">
+          <el-input v-model="form.title" placeholder="请输入会员等级名称" />
         </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入价格" />
+        <el-form-item label="会员价格" prop="price">
+          <el-input v-model="form.price" placeholder="请输入会员价格" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -126,7 +126,7 @@ const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 10,
-    titile: null,
+    title: null,
     price: null
   },
   rules: {
@@ -135,7 +135,7 @@ const data = reactive({
 
 const { queryParams, form, rules } = toRefs(data);
 
-/** 查询vip列表 */
+/** 查询会员等级列表 */
 function getList() {
   loading.value = true;
   listVip(queryParams.value).then(response => {
@@ -155,7 +155,7 @@ function cancel() {
 function reset() {
   form.value = {
     id: null,
-    titile: null,
+    title: null,
     price: null
   };
   proxy.resetForm("vipRef");
@@ -184,7 +184,7 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   reset();
   open.value = true;
-  title.value = "添加vip";
+  title.value = "添加会员等级";
 }
 
 /** 修改按钮操作 */
@@ -194,7 +194,7 @@ function handleUpdate(row) {
   getVip(_id).then(response => {
     form.value = response.data;
     open.value = true;
-    title.value = "修改vip";
+    title.value = "修改会员等级";
   });
 }
 
@@ -222,7 +222,7 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const _ids = row.id || ids.value;
-  proxy.$modal.confirm('是否确认删除vip编号为"' + _ids + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除会员等级编号为"' + _ids + '"的数据项？').then(function() {
     return delVip(_ids);
   }).then(() => {
     getList();

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询博客详情表列表
+// 查询博客文章详情列表
 export function listDetail(query) {
   return request({
     url: '/system/detail/list',
@@ -9,7 +9,7 @@ export function listDetail(query) {
   })
 }
 
-// 查询博客详情表详细
+// 查询博客文章详情详细
 export function getDetail(id) {
   return request({
     url: '/system/detail/' + id,
@@ -17,7 +17,7 @@ export function getDetail(id) {
   })
 }
 
-// 新增博客详情表
+// 新增博客文章详情
 export function addDetail(data) {
   return request({
     url: '/system/detail',
@@ -26,7 +26,7 @@ export function addDetail(data) {
   })
 }
 
-// 修改博客详情表
+// 修改博客文章详情
 export function updateDetail(data) {
   return request({
     url: '/system/detail',
@@ -35,7 +35,7 @@ export function updateDetail(data) {
   })
 }
 
-// 删除博客详情表
+// 删除博客文章详情
 export function delDetail(id) {
   return request({
     url: '/system/detail/' + id,

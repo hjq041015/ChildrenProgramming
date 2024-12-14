@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户id" prop="uid">
+      <el-form-item label="用户ID" prop="uid">
         <el-input
           v-model="queryParams.uid"
-          placeholder="请输入用户id"
+          placeholder="请输入用户ID"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="下单时间" prop="time">
+      <el-form-item label="时间" prop="time">
         <el-date-picker clearable
           v-model="queryParams.time"
           type="date"
           value-format="YYYY-MM-DD"
-          placeholder="请选择下单时间">
+          placeholder="请选择时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="商品价格" prop="price">
+      <el-form-item label="合计金额" prop="pirce">
         <el-input
-          v-model="queryParams.price"
-          placeholder="请输入商品价格"
+          v-model="queryParams.pirce"
+          placeholder="请输入合计金额"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -33,10 +33,10 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="收件人公司" prop="company">
+      <el-form-item label="收件公司" prop="company">
         <el-input
           v-model="queryParams.company"
-          placeholder="请输入收件人公司"
+          placeholder="请输入收件公司"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -57,17 +57,17 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="街道地址1" prop="street1">
+      <el-form-item label="街道地址1" prop="steet1">
         <el-input
-          v-model="queryParams.street1"
+          v-model="queryParams.steet1"
           placeholder="请输入街道地址1"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="街道地址2" prop="street2">
+      <el-form-item label="街道地址2" prop="steet2">
         <el-input
-          v-model="queryParams.street2"
+          v-model="queryParams.steet2"
           placeholder="请输入街道地址2"
           clearable
           @keyup.enter="handleQuery"
@@ -89,10 +89,10 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="邮箱地址" prop="email">
+      <el-form-item label="电子邮件" prop="email">
         <el-input
           v-model="queryParams.email"
-          placeholder="请输入邮箱地址"
+          placeholder="请输入电子邮件"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -148,23 +148,23 @@
     <el-table v-loading="loading" :data="orderList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="订单号" align="center" prop="id" />
-      <el-table-column label="用户id" align="center" prop="uid" />
-      <el-table-column label="下单时间" align="center" prop="time" width="180">
+      <el-table-column label="用户ID" align="center" prop="uid" />
+      <el-table-column label="时间" align="center" prop="time" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.time, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="商品价格" align="center" prop="price" />
+      <el-table-column label="合计金额" align="center" prop="pirce" />
       <el-table-column label="收件人名称" align="center" prop="name" />
-      <el-table-column label="收件人公司" align="center" prop="company" />
+      <el-table-column label="收件公司" align="center" prop="company" />
       <el-table-column label="国家" align="center" prop="country" />
       <el-table-column label="城市" align="center" prop="city" />
-      <el-table-column label="街道地址1" align="center" prop="street1" />
-      <el-table-column label="街道地址2" align="center" prop="street2" />
+      <el-table-column label="街道地址1" align="center" prop="steet1" />
+      <el-table-column label="街道地址2" align="center" prop="steet2" />
       <el-table-column label="邮政编码" align="center" prop="postal" />
       <el-table-column label="手机号码" align="center" prop="phone" />
-      <el-table-column label="邮箱地址" align="center" prop="email" />
-      <el-table-column label="备注信息" align="center" prop="note" />
+      <el-table-column label="电子邮件" align="center" prop="email" />
+      <el-table-column label="订单备注" align="center" prop="note" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:order:edit']">修改</el-button>
@@ -184,25 +184,25 @@
     <!-- 添加或修改订单列表对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="orderRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户id" prop="uid">
-          <el-input v-model="form.uid" placeholder="请输入用户id" />
+        <el-form-item label="用户ID" prop="uid">
+          <el-input v-model="form.uid" placeholder="请输入用户ID" />
         </el-form-item>
-        <el-form-item label="下单时间" prop="time">
+        <el-form-item label="时间" prop="time">
           <el-date-picker clearable
             v-model="form.time"
             type="date"
             value-format="YYYY-MM-DD"
-            placeholder="请选择下单时间">
+            placeholder="请选择时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="商品价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入商品价格" />
+        <el-form-item label="合计金额" prop="pirce">
+          <el-input v-model="form.pirce" placeholder="请输入合计金额" />
         </el-form-item>
         <el-form-item label="收件人名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入收件人名称" />
         </el-form-item>
-        <el-form-item label="收件人公司" prop="company">
-          <el-input v-model="form.company" placeholder="请输入收件人公司" />
+        <el-form-item label="收件公司" prop="company">
+          <el-input v-model="form.company" placeholder="请输入收件公司" />
         </el-form-item>
         <el-form-item label="国家" prop="country">
           <el-input v-model="form.country" placeholder="请输入国家" />
@@ -210,11 +210,11 @@
         <el-form-item label="城市" prop="city">
           <el-input v-model="form.city" placeholder="请输入城市" />
         </el-form-item>
-        <el-form-item label="街道地址1" prop="street1">
-          <el-input v-model="form.street1" placeholder="请输入街道地址1" />
+        <el-form-item label="街道地址1" prop="steet1">
+          <el-input v-model="form.steet1" placeholder="请输入街道地址1" />
         </el-form-item>
-        <el-form-item label="街道地址2" prop="street2">
-          <el-input v-model="form.street2" placeholder="请输入街道地址2" />
+        <el-form-item label="街道地址2" prop="steet2">
+          <el-input v-model="form.steet2" placeholder="请输入街道地址2" />
         </el-form-item>
         <el-form-item label="邮政编码" prop="postal">
           <el-input v-model="form.postal" placeholder="请输入邮政编码" />
@@ -222,10 +222,10 @@
         <el-form-item label="手机号码" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入手机号码" />
         </el-form-item>
-        <el-form-item label="邮箱地址" prop="email">
-          <el-input v-model="form.email" placeholder="请输入邮箱地址" />
+        <el-form-item label="电子邮件" prop="email">
+          <el-input v-model="form.email" placeholder="请输入电子邮件" />
         </el-form-item>
-        <el-form-item label="备注信息" prop="note">
+        <el-form-item label="订单备注" prop="note">
           <el-input v-model="form.note" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-divider content-position="center">订单商品列表信息</el-divider>
@@ -240,19 +240,19 @@
         <el-table :data="orderItemList" :row-class-name="rowOrderItemIndex" @selection-change="handleOrderItemSelectionChange" ref="orderItem">
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column label="序号" align="center" prop="index" width="50"/>
-          <el-table-column label="商品名称" prop="title" width="150">
+          <el-table-column label="" prop="title" width="150">
             <template #default="scope">
-              <el-input v-model="scope.row.title" placeholder="请输入商品名称" />
+              <el-input v-model="scope.row.title" placeholder="请输入" />
             </template>
           </el-table-column>
-          <el-table-column label="商品价格" prop="price" width="150">
+          <el-table-column label="" prop="price" width="150">
             <template #default="scope">
-              <el-input v-model="scope.row.price" placeholder="请输入商品价格" />
+              <el-input v-model="scope.row.price" placeholder="请输入" />
             </template>
           </el-table-column>
-          <el-table-column label="商品数量" prop="count" width="150">
+          <el-table-column label="" prop="count" width="150">
             <template #default="scope">
-              <el-input v-model="scope.row.count" placeholder="请输入商品数量" />
+              <el-input v-model="scope.row.count" placeholder="请输入" />
             </template>
           </el-table-column>
         </el-table>
@@ -291,13 +291,13 @@ const data = reactive({
     pageSize: 10,
     uid: null,
     time: null,
-    price: null,
+    pirce: null,
     name: null,
     company: null,
     country: null,
     city: null,
-    street1: null,
-    street2: null,
+    steet1: null,
+    steet2: null,
     postal: null,
     phone: null,
     email: null,
@@ -331,13 +331,13 @@ function reset() {
     id: null,
     uid: null,
     time: null,
-    price: null,
+    pirce: null,
     name: null,
     company: null,
     country: null,
     city: null,
-    street1: null,
-    street2: null,
+    steet1: null,
+    steet2: null,
     postal: null,
     phone: null,
     email: null,

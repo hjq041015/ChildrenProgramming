@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户Id" prop="uid">
+      <el-form-item label="用户ID" prop="uid">
         <el-input
           v-model="queryParams.uid"
-          placeholder="请输入用户Id"
+          placeholder="请输入用户ID"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -17,26 +17,26 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="商品名称" prop="title">
+      <el-form-item label="课程标题" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入商品名称"
+          placeholder="请输入课程标题"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="商品价格" prop="price">
+      <el-form-item label="价格" prop="price">
         <el-input
           v-model="queryParams.price"
-          placeholder="请输入商品价格"
+          placeholder="请输入价格"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="商品数量" prop="count">
+      <el-form-item label="数量" prop="count">
         <el-input
           v-model="queryParams.count"
-          placeholder="请输入商品数量"
+          placeholder="请输入数量"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -91,12 +91,12 @@
 
     <el-table v-loading="loading" :data="itemList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="购物车Id" align="center" prop="id" />
-      <el-table-column label="用户Id" align="center" prop="uid" />
+      <el-table-column label="商品ID" align="center" prop="id" />
+      <el-table-column label="用户ID" align="center" prop="uid" />
       <el-table-column label="课程ID" align="center" prop="courseId" />
-      <el-table-column label="商品名称" align="center" prop="title" />
-      <el-table-column label="商品价格" align="center" prop="price" />
-      <el-table-column label="商品数量" align="center" prop="count" />
+      <el-table-column label="课程标题" align="center" prop="title" />
+      <el-table-column label="价格" align="center" prop="price" />
+      <el-table-column label="数量" align="center" prop="count" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:item:edit']">修改</el-button>
@@ -113,23 +113,23 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改购物车对话框 -->
+    <!-- 添加或修改购物车商品对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="itemRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户Id" prop="uid">
-          <el-input v-model="form.uid" placeholder="请输入用户Id" />
+        <el-form-item label="用户ID" prop="uid">
+          <el-input v-model="form.uid" placeholder="请输入用户ID" />
         </el-form-item>
         <el-form-item label="课程ID" prop="courseId">
           <el-input v-model="form.courseId" placeholder="请输入课程ID" />
         </el-form-item>
-        <el-form-item label="商品名称" prop="title">
-          <el-input v-model="form.title" placeholder="请输入商品名称" />
+        <el-form-item label="课程标题" prop="title">
+          <el-input v-model="form.title" placeholder="请输入课程标题" />
         </el-form-item>
-        <el-form-item label="商品价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入商品价格" />
+        <el-form-item label="价格" prop="price">
+          <el-input v-model="form.price" placeholder="请输入价格" />
         </el-form-item>
-        <el-form-item label="商品数量" prop="count">
-          <el-input v-model="form.count" placeholder="请输入商品数量" />
+        <el-form-item label="数量" prop="count">
+          <el-input v-model="form.count" placeholder="请输入数量" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -169,15 +169,12 @@ const data = reactive({
     count: null
   },
   rules: {
-    uid: [
-      { required: true, message: "用户Id不能为空", trigger: "blur" }
-    ],
   }
 });
 
 const { queryParams, form, rules } = toRefs(data);
 
-/** 查询购物车列表 */
+/** 查询购物车商品列表 */
 function getList() {
   loading.value = true;
   listItem(queryParams.value).then(response => {
@@ -229,7 +226,7 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   reset();
   open.value = true;
-  title.value = "添加购物车";
+  title.value = "添加购物车商品";
 }
 
 /** 修改按钮操作 */
@@ -239,7 +236,7 @@ function handleUpdate(row) {
   getItem(_id).then(response => {
     form.value = response.data;
     open.value = true;
-    title.value = "修改购物车";
+    title.value = "修改购物车商品";
   });
 }
 
@@ -267,7 +264,7 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const _ids = row.id || ids.value;
-  proxy.$modal.confirm('是否确认删除购物车编号为"' + _ids + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除购物车商品编号为"' + _ids + '"的数据项？').then(function() {
     return delItem(_ids);
   }).then(() => {
     getList();

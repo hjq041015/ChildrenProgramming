@@ -1,34 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="建议人名" prop="name">
+      <el-form-item label="名字" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入建议人名"
+          placeholder="请输入名字"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="邮件" prop="email">
+      <el-form-item label="电子邮件" prop="email">
         <el-input
           v-model="queryParams.email"
-          placeholder="请输入邮件"
+          placeholder="请输入电子邮件"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="手机号" prop="phone">
+      <el-form-item label="电话号码" prop="phone">
         <el-input
           v-model="queryParams.phone"
-          placeholder="请输入手机号"
-          clearable
-          @keyup.enter="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="建议内容" prop="message">
-        <el-input
-          v-model="queryParams.message"
-          placeholder="请输入建议内容"
+          placeholder="请输入电话号码"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -41,10 +33,10 @@
           placeholder="请选择时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="ip地址" prop="ip">
+      <el-form-item label="IP地址" prop="ip">
         <el-input
           v-model="queryParams.ip"
-          placeholder="请输入ip地址"
+          placeholder="请输入IP地址"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -100,16 +92,16 @@
     <el-table v-loading="loading" :data="adviceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="建议ID" align="center" prop="id" />
-      <el-table-column label="建议人名" align="center" prop="name" />
-      <el-table-column label="邮件" align="center" prop="email" />
-      <el-table-column label="手机号" align="center" prop="phone" />
-      <el-table-column label="建议内容" align="center" prop="message" />
+      <el-table-column label="名字" align="center" prop="name" />
+      <el-table-column label="电子邮件" align="center" prop="email" />
+      <el-table-column label="电话号码" align="center" prop="phone" />
+      <el-table-column label="消息内容" align="center" prop="message" />
       <el-table-column label="时间" align="center" prop="time" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.time, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="ip地址" align="center" prop="ip" />
+      <el-table-column label="IP地址" align="center" prop="ip" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:advice:edit']">修改</el-button>
@@ -126,20 +118,20 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改建议表对话框 -->
+    <!-- 添加或修改用户意见对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="adviceRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="建议人名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入建议人名" />
+        <el-form-item label="名字" prop="name">
+          <el-input v-model="form.name" placeholder="请输入名字" />
         </el-form-item>
-        <el-form-item label="邮件" prop="email">
-          <el-input v-model="form.email" placeholder="请输入邮件" />
+        <el-form-item label="电子邮件" prop="email">
+          <el-input v-model="form.email" placeholder="请输入电子邮件" />
         </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入手机号" />
+        <el-form-item label="电话号码" prop="phone">
+          <el-input v-model="form.phone" placeholder="请输入电话号码" />
         </el-form-item>
-        <el-form-item label="建议内容" prop="message">
-          <el-input v-model="form.message" placeholder="请输入建议内容" />
+        <el-form-item label="消息内容" prop="message">
+          <el-input v-model="form.message" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="时间" prop="time">
           <el-date-picker clearable
@@ -149,8 +141,8 @@
             placeholder="请选择时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="ip地址" prop="ip">
-          <el-input v-model="form.ip" placeholder="请输入ip地址" />
+        <el-form-item label="IP地址" prop="ip">
+          <el-input v-model="form.ip" placeholder="请输入IP地址" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -196,7 +188,7 @@ const data = reactive({
 
 const { queryParams, form, rules } = toRefs(data);
 
-/** 查询建议表列表 */
+/** 查询用户意见列表 */
 function getList() {
   loading.value = true;
   listAdvice(queryParams.value).then(response => {
@@ -249,7 +241,7 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   reset();
   open.value = true;
-  title.value = "添加建议表";
+  title.value = "添加用户意见";
 }
 
 /** 修改按钮操作 */
@@ -259,7 +251,7 @@ function handleUpdate(row) {
   getAdvice(_id).then(response => {
     form.value = response.data;
     open.value = true;
-    title.value = "修改建议表";
+    title.value = "修改用户意见";
   });
 }
 
@@ -287,7 +279,7 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const _ids = row.id || ids.value;
-  proxy.$modal.confirm('是否确认删除建议表编号为"' + _ids + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除用户意见编号为"' + _ids + '"的数据项？').then(function() {
     return delAdvice(_ids);
   }).then(() => {
     getList();

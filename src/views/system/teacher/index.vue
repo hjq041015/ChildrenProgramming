@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="教师名称" prop="name">
+      <el-form-item label="名称" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入教师名称"
+          placeholder="请输入名称"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="教师职位" prop="post">
+      <el-form-item label="职位" prop="post">
         <el-input
           v-model="queryParams.post"
-          placeholder="请输入教师职位"
+          placeholder="请输入职位"
           clearable
           @keyup.enter="handleQuery"
         />
@@ -92,8 +92,8 @@
     <el-table v-loading="loading" :data="teacherList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="教师ID" align="center" prop="id" />
-      <el-table-column label="教师名称" align="center" prop="name" />
-      <el-table-column label="教师职位" align="center" prop="post" />
+      <el-table-column label="名称" align="center" prop="name" />
+      <el-table-column label="职位" align="center" prop="post" />
       <el-table-column label="联系方式1" align="center" prop="contact1" />
       <el-table-column label="联系方式2" align="center" prop="contact2" />
       <el-table-column label="联系方式3" align="center" prop="contact3" />
@@ -116,11 +116,11 @@
     <!-- 添加或修改教师管理对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="teacherRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="教师名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入教师名称" />
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="教师职位" prop="post">
-          <el-input v-model="form.post" placeholder="请输入教师职位" />
+        <el-form-item label="职位" prop="post">
+          <el-input v-model="form.post" placeholder="请输入职位" />
         </el-form-item>
         <el-form-item label="联系方式1" prop="contact1">
           <el-input v-model="form.contact1" placeholder="请输入联系方式1" />
