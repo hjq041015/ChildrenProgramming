@@ -62,7 +62,7 @@ public class TeacherController extends BaseController
     /**
      * 获取教师管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:teacher:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
